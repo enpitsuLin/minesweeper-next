@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
+import App from './App';
 
-const ROOT = document.querySelector('.container');
+const root = document.querySelector('#app');
 
-render(<h1>Hello React!</h1>, ROOT);
+render(<App />, root);
