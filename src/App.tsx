@@ -1,8 +1,7 @@
 import React from 'react';
-import HelloWorld from './components/HelloWorld';
-
+import Ground from './components/Ground';
 function App() {
-	return <HelloWorld name="World!" />;
+	return <Ground width={10} height={10} count={10} />;
 }
 
 export default App;
