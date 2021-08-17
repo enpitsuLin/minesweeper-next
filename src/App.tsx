@@ -1,7 +1,11 @@
 import React from 'react';
-import Ground from './components/Ground';
+import Game from './components/Game';
 function App() {
-	return <Ground width={10} height={10} count={10} />;
+	return (
+		<div>
+			<Game level={10} />
+		</div>
+	);
 }
 
 export default App;

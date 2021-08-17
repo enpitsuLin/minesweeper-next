@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledCell = styled.div`
+	user-select: none;
 	background-color: rgba(0, 0, 0, 0.4);
 	color: #eeeeee;
 	border-radius: 3px;
@@ -30,20 +31,33 @@ const StyledCell = styled.div`
 	}
 `;
 
-interface Props {
+export interface CellItem {
 	row: number;
 	col: number;
 	isOpen: boolean;
 	isMark: boolean;
 	isMine: boolean;
 	adjMine: number;
-	handleOpen?: (row: number, col: number) => void;
+}
+
+interface Props extends CellItem {
+	handleEvent?: (type: 'mark' | 'open') => void;
 }
 
 function Cell(props: Props) {
-	const { row, col, isOpen, isMark, isMine, adjMine, handleOpen } = props;
+	const { row, col, isOpen, isMark, isMine, adjMine, handleEvent } = props;
+
 	return (
-		<StyledCell className={`cell${isOpen ? ' open' : ''}${isMark ? ' mark' : ''}`}>
+		<StyledCell
+			className={`cell${isOpen ? ' open' : ''}${isMark ? ' mark' : ''}`}
+			onClick={() => {
+				handleEvent('open');
+			}}
+			onContextMenu={e => {
+				e.preventDefault();
+				handleEvent('mark');
+			}}
+		>
 			{isOpen ? (isMine ? '💣' : adjMine) : isMark ? '🚩' : ''}
 		</StyledCell>
 	);
