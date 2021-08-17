@@ -94,6 +94,27 @@ export default class Ground extends Component<Props, { mineMap: CellItem[][] }> 
 			mineMap: mineMap.map(row => row.map(col => ({ ...col, isOpen: true })))
 		});
 	}
+	/**
+	 * 处理Cell open
+	 * @param row row
+	 * @param col col
+	 */
+	handleOpenCell(row: number, col: number) {
+		const mineMap = this.state.mineMap;
+		mineMap[row][col].isOpen = true;
+		this.setState({ mineMap });
+	}
+	/**
+	 * 处理Cell mark
+	 * @param row 
+	 * @param col 
+	 */
+	handleMarkCell(row: number, col: number) {
+		const mineMap = this.state.mineMap;
+		const ClickCell = mineMap[row][col];
+		ClickCell.isMark = !ClickCell.isMark;
+		this.setState({ mineMap });
+	}
 	componentDidMount() {
 		const mineMap = this.generateMine();
 		this.setState({
@@ -120,12 +141,10 @@ export default class Ground extends Component<Props, { mineMap: CellItem[][] }> 
 									{...colItem}
 									handleEvent={type => {
 										if (type == 'open') {
-											mineMap[rowIndex][colIndex].isOpen = true;
-											this.setState({ mineMap });
+											this.handleOpenCell(rowIndex, colIndex);
 										}
 										if (type == 'mark') {
-											mineMap[rowIndex][colIndex].isMark = !mineMap[rowIndex][colIndex].isMark;
-											this.setState({ mineMap });
+											this.handleMarkCell(rowIndex, colIndex);
 										}
 									}}
 								/>
