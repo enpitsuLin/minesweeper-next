@@ -19,7 +19,7 @@ export default class Game extends Component<Props, { width: number; height: numb
 		this.state = {
 			width: 10,
 			height: 10,
-			count: 0
+			count: 10
 		};
 	}
 	render() {
