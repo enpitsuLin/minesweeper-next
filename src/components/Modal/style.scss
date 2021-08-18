@@ -1,0 +1,35 @@
+.modal-mask {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color: #0003;
+	z-index: 100;
+}
+
+.modal {
+	border: 1px solid #9f9f9f;
+	border-radius: 16px;
+	margin: 0 auto;
+	position: absolute;
+	z-index: 101;
+	.modal__header {
+		border-bottom: 1px solid #9f9f9f;
+		padding: 8px 16px;
+		display: flex;
+		justify-content: space-between;
+		.modal__title {
+		}
+		.modal__close {
+			cursor: pointer;
+		}
+	}
+	.modal__content {
+		padding: 8px 16px;
+	}
+	.modal__footer {
+		border-top: 1px solid #9f9f9f;
+		padding: 8px 16px;
+	}
+}

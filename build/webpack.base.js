@@ -44,6 +44,10 @@ module.exports = {
 					presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript']
 				}
 			},
+			{
+				test: /\.s[ac]ss$/i,
+				use: ['style-loader', 'css-loader', 'sass-loader']
+			},
 			{ enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' }
 		]
 	},
