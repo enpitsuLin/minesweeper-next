@@ -88,6 +88,9 @@ export default class Ground extends Component<Props, { mineMap: CellItem[][] }> 
 		}
 		return mineMap;
 	}
+	/**
+	 * 打开所有的Cell
+	 */
 	openAllCell() {
 		const mineMap = this.state.mineMap;
 		this.setState({
@@ -106,8 +109,8 @@ export default class Ground extends Component<Props, { mineMap: CellItem[][] }> 
 	}
 	/**
 	 * 处理Cell mark
-	 * @param row 
-	 * @param col 
+	 * @param row
+	 * @param col
 	 */
 	handleMarkCell(row: number, col: number) {
 		const mineMap = this.state.mineMap;

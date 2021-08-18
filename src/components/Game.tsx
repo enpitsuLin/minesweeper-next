@@ -13,17 +13,33 @@ interface Props {
 	level: number;
 }
 
-export default class Game extends Component<Props, { width: number; height: number; count: number }> {
+interface State {
+	status: 'gaming' | 'fail' | 'win';
+	mineSize: {
+		width: number;
+		height: number;
+		count: number;
+	};
+}
+
+export default class Game extends Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			width: 10,
-			height: 10,
-			count: 10
+			status: 'gaming',
+			mineSize: { width: 10, height: 10, count: 10 }
 		};
 	}
+	handleChangeStatus(type: 'win' | 'fail') {
+		this.setState({ status: type });
+		if (type == 'fail') {
+			console.log(type);
+		} else if (type == 'win') {
+			console.log(type);
+		}
+	}
 	render() {
-		const groundProps = this.state;
+		const groundProps = this.state.mineSize;
 		return (
 			<StyledGame>
 				<Ground {...groundProps}></Ground>
