@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Cell, { CellItem } from './Cell';
+import Button from './Button';
 
 const StyledGround = styled.div`
 	margin: 32px;
@@ -128,13 +129,13 @@ export default class Ground extends Component<Props, { mineMap: CellItem[][] }> 
 		const mineMap = this.state.mineMap;
 		return (
 			<>
-				<button
+				<Button
 					onClick={() => {
 						this.openAllCell();
 					}}
 				>
 					开启all
-				</button>
+				</Button>
 				<StyledGround>
 					{mineMap.map((rowItem, rowIndex) => (
 						<StyledRow key={rowIndex}>
