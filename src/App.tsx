@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
-import Game from './components/Game';
-import Modal from './components/Modal';
+import { Button, Modal, Game } from '@/components/';
 
 function App() {
 	const [visible, setVisible] = useState(false);
 	return (
 		<div>
-			<button
-				onClick={() => {
-					setVisible(!visible);
-				}}
-			>
-				切换
-			</button>
+			<Button onClick={setVisible.bind(this, true)}>
+				<span>切换</span>
+			</Button>
 			<Modal
 				visible={visible}
 				title="标题"
+				closeOnModal={false}
 				onOk={() => {
 					setVisible(false);
 				}}
