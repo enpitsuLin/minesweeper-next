@@ -20,7 +20,7 @@
 	left: 0;
 	overflow: auto;
 	outline: 0;
-	-webkit-overflow-scrolling: touch;
+	pointer-events: none;
 }
 
 .modal {
@@ -28,15 +28,13 @@
 	padding: 0 0 24px;
 	color: #000000d9;
 	font-size: 14px;
-	font-variant: tabular-nums;
 	line-height: 1.5715;
 	list-style: none;
-	font-feature-settings: 'tnum';
 	pointer-events: none;
 	position: relative;
 	top: 100px;
 	width: auto;
-	max-width: calc(100vw - 32px);
+	max-width: 480px;
 	margin: 0 auto;
 }
 .modal-content {
@@ -64,10 +62,53 @@
 	outline: 0;
 	cursor: pointer;
 	transition: color 0.3s;
+	.modal-close-x {
+		color: #a1a1a1;
+		&:hover {
+			color: #757575;
+		}
+		.icon-close {
+			box-sizing: border-box;
+			position: relative;
+			display: block;
+			width: 22px;
+			height: 22px;
+			border: 2px solid #0000;
+			border-radius: 40px;
+			&::before {
+				content: '';
+				display: block;
+				box-sizing: border-box;
+				position: absolute;
+				width: 16px;
+				height: 2px;
+				background: currentColor;
+				transform: rotate(45deg);
+				border-radius: 5px;
+				top: 8px;
+				left: 1px;
+			}
+			&::after {
+				content: '';
+				display: block;
+				box-sizing: border-box;
+				position: absolute;
+				width: 16px;
+				height: 2px;
+				background: currentColor;
+				transform: rotate(-45deg);
+				border-radius: 5px;
+				top: 8px;
+				left: 1px;
+			}
+		}
+	}
 }
 
 .modal-close-x {
-	display: block;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	width: 56px;
 	height: 56px;
 	font-size: 16px;
@@ -108,35 +149,9 @@
 	background: 0 0;
 	border-top: 1px solid #f0f0f0;
 	border-radius: 0 0 2px 2px;
-	.button {
+	button {
 		&:not(:first-child) {
 			margin-left: 8px;
 		}
 	}
-}
-
-.button {
-	line-height: 1.5715;
-	position: relative;
-	display: inline-block;
-	font-weight: 400;
-	white-space: nowrap;
-	text-align: center;
-	background-image: none;
-	border: 1px solid #0000;
-	box-shadow: 0 2px #00000004;
-	cursor: pointer;
-	transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	touch-action: manipulation;
-	height: 32px;
-	padding: 4px 15px;
-	font-size: 14px;
-	border-radius: 2px;
-	color: #000000d9;
-	border-color: #d9d9d9;
-	background: #fff;
 }
