@@ -27,7 +27,7 @@ export default class Game extends Component<Props, State> {
 		super(props);
 		this.state = {
 			status: 'gaming',
-			mineSize: { width: 10, height: 10, count: 10 }
+			mineSize: { width: 10, height: 10, count: 1 }
 		};
 	}
 	handleChangeStatus(type: 'win' | 'fail') {

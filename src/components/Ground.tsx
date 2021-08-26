@@ -24,11 +24,13 @@ interface Props {
 	count: number;
 }
 
-export default class Ground extends Component<Props, { mineMap: CellItem[][] }> {
+export default class Ground extends Component<Props, { mineMap: CellItem[][]; opened: number; marked: number }> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
-			mineMap: []
+			mineMap: [],
+			opened: 0,
+			marked: 0
 		};
 	}
 	/**
@@ -104,9 +106,24 @@ export default class Ground extends Component<Props, { mineMap: CellItem[][] }> 
 	 * @param col col
 	 */
 	handleOpenCell(row: number, col: number) {
+		if (row < 0 || col < 0 || row > this.props.height - 1 || col > this.props.width - 1) return;
 		const mineMap = this.state.mineMap;
-		mineMap[row][col].isOpen = true;
+		const ClickCell = mineMap[row][col];
+		if (ClickCell.isOpen) return;
+		ClickCell.isOpen = true;
+		this.setState((state: { opened: number }) => ({ opened: state.opened + 1 }));
 		this.setState({ mineMap });
+
+		if (ClickCell.isMine === true) {
+			this.handleGameOver();
+			return;
+		}
+
+		if (ClickCell.adjMine != 0) return;
+		this.handleOpenCell(row - 1, col);
+		this.handleOpenCell(row + 1, col);
+		this.handleOpenCell(row, col - 1);
+		this.handleOpenCell(row, col + 1);
 	}
 	/**
 	 * 处理Cell mark
@@ -116,9 +133,48 @@ export default class Ground extends Component<Props, { mineMap: CellItem[][] }> 
 	handleMarkCell(row: number, col: number) {
 		const mineMap = this.state.mineMap;
 		const ClickCell = mineMap[row][col];
+		if (ClickCell.isOpen) return;
 		ClickCell.isMark = !ClickCell.isMark;
-		this.setState({ mineMap });
+		this.setState({ mineMap, marked: this.state.marked + (ClickCell.isMark ? +1 : -1) });
 	}
+	/**
+	 * GameOver
+	 */
+	handleGameOver() {
+		this.openAllCell();
+	}
+	/**
+	 * handleGameWin
+	 */
+	handleGameWin() {
+		const mineMap = this.state.mineMap;
+		this.setState({
+			mineMap: mineMap.map(row => row.map(col => ({ ...col, isMark: col.isMine ? true : false, isOpen: true })))
+		});
+	}
+	/**
+	 * checkWin
+	 */
+	checkWin() {
+		const { width, height, count } = this.props;
+		const { opened } = this.state;
+		const totalMine = width * height;
+		console.log(opened, count);
+
+		if (opened + count === totalMine) {
+			console.log('win!');
+		}
+	}
+	/**
+	 * componentDidUpdate
+	 * @desc 部分修改state的操作只能在该生命周期中调用
+	 */
+	componentDidUpdate() {
+		this.checkWin();
+	}
+	/**
+	 * componentDidMount
+	 */
 	componentDidMount() {
 		const mineMap = this.generateMine();
 		this.setState({

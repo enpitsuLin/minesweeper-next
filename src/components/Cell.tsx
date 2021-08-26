@@ -13,8 +13,12 @@ const StyledCell = styled.div`
 	cursor: pointer;
 	text-align: center;
 	transition-duration: 0.4s;
+
 	&.open {
 		background-color: rgba(0, 0, 0, 0.7);
+		&.mine {
+			background-color: rgba(100, 0, 0, 0.7);
+		}
 		&.mark {
 			background-color: rgb(138, 106, 2);
 		}
@@ -49,7 +53,7 @@ function Cell(props: Props) {
 
 	return (
 		<StyledCell
-			className={`cell${isOpen ? ' open' : ''}${isMark ? ' mark' : ''}`}
+			className={`cell${isOpen ? ' open' : ''}${isMark ? ' mark' : ''}${isMine ? ' mine' : ''}`}
 			onClick={() => {
 				handleEvent('open');
 			}}
