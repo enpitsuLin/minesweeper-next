@@ -33,7 +33,11 @@
 - [ ] 增加路由处理系统;
 - [x] 使用 `styled-components`;
 - [ ] 单元测试;
-- [ ] 封装一个比较好用的模态对话框组件
+- [x] 增加了一个简单的按钮组件
+  - [ ] 增加更多的 props 和更好的动画效果
+- [x] 封装一个简单的模态对话框组件
+  - [x] 完成对话框功能
+  - [ ] 方法调用
 
 # 上手体验
 
@@ -60,3 +64,29 @@
 从这方面来看二者除了部分`api`设置上能够找到共同点——无论是`React Class`和声明式的`Option Api`或是`Hooks`与`Composition api`,但其设计思维是完全不同的.
 
 但能够掌握其一的开发者确实能够较为快速的掌握另一方,这种体验还是逃脱不了它们本质还是 js 的各式各样的封装.
+
+## React 内部 `state` 及其异步的 `setState()`
+
+### state
+
+1. 一个 react 的 Class 组件其内部的 state 默认是 immutable 即不可变的,所以在需要更改一个 state 的时候会使用 setState()进行变更;
+2. 一个组件的 state 一般不允许被外部通过组件示例访问~~Class 组件在通过父组件传入函数可以将实例化的本身赋值给父组件共调用~~;
+3. 在 React 自顶向下的数据流中每个组件维护的 state 只能允许影响到其子组件;
+4. 内部 state 改变会引发 `shouldComponentUpdate` 生命周期~~此生命周期即将改名并弃用~~
+
+### setState()
+
+1. 可以异步的改变组件内部的 state,但同时多次更改将会被 react 合并,并且该方法为异步,递归中调用参数应使用函数形式;
+2. 会修改 state 即能引发 `shouldComponentUpdate` 生命周期
+
+## 生命周期 [@see](https://www.bilibili.com/read/cv9056199)
+
+首先 `React v16.3` 之前拥有 `componentWillMount`、`componentDidMount`、`shouldComponentUpdate`、`componentWillUpdate`、`componentDidUpdate`、`componentWillUnmount`等生命周期函数
+
+但在`v16.3`之后新增了两个`getDerivedStateFromProps`、`getSnapshotBeforeUpdate`以及废弃了三个`componentWillMount`、`componentWillUpdate`、`componentWillUnmount`
+
+首先无论是之前还是之后，大致生命周期还是分为三个部分为
+
+1. 挂载时
+2. 更新时
+3. 卸载时
