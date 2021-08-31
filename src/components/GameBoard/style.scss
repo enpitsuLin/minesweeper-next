@@ -6,6 +6,7 @@
 }
 .game-info {
 	display: flex;
+	padding: 16px;
 	justify-content: space-around;
 	border-radius: 8px;
 	background-color: #fff;
@@ -15,8 +16,6 @@
 	div {
 		width: 25%;
 		text-align: center;
-		margin-top: 15px;
-		margin-bottom: 15px;
 		line-height: 30px;
 	}
 }

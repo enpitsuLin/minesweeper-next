@@ -1,0 +1,36 @@
+.game-setting {
+	padding: 32px;
+	border-radius: 8px;
+	box-shadow: 1px 1px 14px;
+	.game-setting__content {
+		> div {
+			margin-bottom: 16px;
+		}
+		.levels {
+			display: flex;
+			justify-content: space-between;
+		}
+	}
+
+	.game-setting__bottom {
+		text-align: right;
+		margin-bottom: 0;
+	}
+	input {
+		width: 150px;
+		text-indent: 80px;
+		outline: 0;
+		border: 1px solid #000;
+		border-radius: 2px;
+		height: 28px;
+		text-align: center;
+		transition-duration: 0.4s;
+		&:focus {
+			box-shadow: 2px 2px 8px #111;
+			text-indent: 70px;
+		}
+		&:disabled {
+			background-color: #64646473;
+		}
+	}
+}
