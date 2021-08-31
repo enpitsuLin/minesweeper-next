@@ -21,7 +21,14 @@ function App() {
 			>
 				内容
 			</Modal>
-			<GameBoard level={{ totalMines: 1, size: [10, 10] }} />
+			<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+				<GameBoard
+					level={{ totalMines: 10, size: [10, 10] }}
+					onGameEnd={type => {
+						console.log(type);
+					}}
+				/>
+			</div>
 		</div>
 	);
 }

@@ -11,11 +11,12 @@ interface ButtonProps {
 }
 
 const Button: FunctionComponent<ButtonProps> = props => {
-	const { size, loading, icon, type, block, onClick } = props;
-	const cls = `l-button${size ? ' button-' + size : ''}${type ? ` ${type}` : ''} ${block ? ' block' : ''}`;
+	const cls = `l-button${props.size ? ' button-' + props.size : ''}${props.type ? ` ${props.type}` : ''} ${
+		props.block ? ' block' : ''
+	}`;
 
 	return (
-		<button className={cls} onClick={onClick.bind(this)}>
+		<button className={cls} onClick={props.onClick ? props.onClick.bind(this) : null}>
 			{props.children}
 		</button>
 	);

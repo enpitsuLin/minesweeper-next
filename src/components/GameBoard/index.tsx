@@ -1,5 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import Cell, { CellItem } from '../Cell';
+import Button from '../Button';
+import { useTimer } from '@/hooks/timer';
 import './style.scss';
 
 interface Props {
@@ -7,29 +9,47 @@ interface Props {
 		totalMines: number;
 		size: [number, number];
 	};
+	onGameEnd: (type: 'win' | 'fail') => void;
 }
 
-type gameStatus = 'in-game' | 'game-over' | 'game-end';
+type gameStatus = 'game-pause' | 'game-playing' | 'game-end';
 
 const GameBoard: FunctionComponent<Props> = props => {
 	const [mineMap, setMineMap] = useState<CellItem[][]>([]);
 	const [mineCount, setMineCount] = useState({ opened: 0, marked: 0 });
-	const [gameStatus, setGameStatus] = useState<gameStatus>('in-game');
-	const [time, setTime] = useState(0);
+	const { time, startTimer, clearTimer } = useTimer();
+	const [status, setStatus] = useState<gameStatus>('game-pause');
 	const [timeStr, setTimeStr] = useState('00:00');
 
 	useEffect(() => {
-		const timer = window.setInterval(() => {
-			setTime(time.valueOf() + 1);
-		}, 1000);
-		return () => {
-			clearInterval(timer);
-		};
+		init();
 	}, []);
 
 	useEffect(() => {
+		if (status == 'game-playing') {
+			startTimer();
+		} else {
+			clearTimer();
+		}
+	}, [status]);
+
+	useEffect(() => {
+		let min = ('0' + Math.floor(time / 60)).slice(-2);
+		let sec = ('0' + (time % 60)).slice(-2);
+		setTimeStr(() => `${min}:${sec}`);
+	}, [time]);
+
+	useEffect(() => {
+		checkWin();
+	}, [mineCount]);
+	/** 初始化棋盘 */
+	const init = () => {
+		setTimeStr('00:00');
+		setStatus('game-pause');
+		setMineCount({ opened: 0, marked: 0 });
+		clearTimer();
 		generateMine();
-	}, []);
+	};
 
 	const generateMine = () => {
 		const {
@@ -90,15 +110,26 @@ const GameBoard: FunctionComponent<Props> = props => {
 	};
 
 	const handleGameOver = () => {
+		if (status == 'game-playing') {
+			setStatus('game-end');
+		}
 		openAllCell();
+		props.onGameEnd('fail');
 	};
-	const handleWin = () => {};
+	const handleWin = () => {
+		if (status == 'game-playing') {
+			setStatus('game-end');
+		}
+		props.onGameEnd('win');
+	};
+
 	const checkWin = () => {
 		const {
 			totalMines,
 			size: [height, width]
 		} = props.level;
-		if (mineCount.opened + totalMines === height * width) {
+
+		if (mineCount.opened + totalMines == height * width) {
 			handleWin();
 		}
 	};
@@ -118,13 +149,16 @@ const GameBoard: FunctionComponent<Props> = props => {
 		if (row < 0 || col < 0 || row > height - 1 || col > width - 1) return;
 		const clickCell = mineMap[row][col];
 		if (clickCell.isOpen) return;
+		if (status == 'game-pause') {
+			setStatus('game-playing');
+		}
 		clickCell.isOpen = true;
 		// 递归中会多次set 用函数式
 		setMineCount((state: { opened: number; marked: number }) => ({
 			opened: state.opened + 1,
 			marked: state.marked
 		}));
-		checkWin();
+
 		setMineMap(mineMap);
 		if (clickCell.isMine === true) {
 			handleGameOver();
@@ -142,15 +176,31 @@ const GameBoard: FunctionComponent<Props> = props => {
 	 * @param col
 	 */
 	const handleMarkCell = (row: number, col: number) => {
+		const totalMines = props.level.totalMines;
 		const clickCell = mineMap[row][col];
-		if (clickCell.isOpen) return;
+		if (clickCell.isOpen || (mineCount.marked >= totalMines && !clickCell.isMark)) return;
 		clickCell.isMark = !clickCell.isMark;
 		setMineCount({ opened: mineCount.opened, marked: mineCount.marked + (clickCell.isMark ? +1 : -1) });
+
 		setMineMap(mineMap);
 	};
 
 	return (
 		<div className="game">
+			<div className="game-info">
+				<div className="timer">
+					<span>时间:{timeStr}</span>
+				</div>
+				<div className="reset">
+					<Button onClick={() => init()}>重来</Button>
+				</div>
+				<div className="back">
+					<Button>返回</Button>
+				</div>
+				<div className="mine-count">
+					<span>剩余:{props.level.totalMines - mineCount.marked}</span>
+				</div>
+			</div>
 			<div className="game-board">
 				{mineMap.map((rowItem, rowIndex) => (
 					<div
