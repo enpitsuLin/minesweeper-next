@@ -1,6 +1,6 @@
-import React, { FunctionComponent } from 'react';
+import React, { createRef, FunctionComponent } from 'react';
 import './style.scss';
-import ReactiveCls from 'classnames';
+import ClassNames from 'classnames';
 
 interface ButtonProps {
 	block?: boolean;
@@ -12,10 +12,14 @@ interface ButtonProps {
 }
 
 const Button: FunctionComponent<ButtonProps> = props => {
-	const cls = ReactiveCls('l-button', props.size && 'button-' + props.size, props.type, props.block && 'block');
-	
+	const cls = ClassNames('l-button', props.size && 'button-' + props.size, props.type, props.block && 'block');
+
+	const handleClick = () => {
+		props.onClick ? props.onClick() : null;
+	};
+
 	return (
-		<button className={cls} onClick={props.onClick ? props.onClick.bind(this) : null}>
+		<button className={cls} onClick={handleClick.bind(this)}>
 			{props.children}
 		</button>
 	);
