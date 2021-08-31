@@ -1,9 +1,10 @@
 {
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
+		"module": "ESNext",
 		"esModuleInterop": false,
 		"jsx": "react",
-		"module": "commonjs",
+		"moduleResolution": "node",
 		"noImplicitAny": true,
 		"outDir": "dist",
 		"preserveConstEnums": true,

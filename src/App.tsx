@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Game } from '@/components/';
+import { Button, Modal, GameBoard } from '@/components/';
 
 function App() {
 	const [visible, setVisible] = useState(false);
@@ -21,7 +21,7 @@ function App() {
 			>
 				内容
 			</Modal>
-			<Game level={10} />
+			<GameBoard level={{ totalMines: 1, size: [10, 10] }} />
 		</div>
 	);
 }
