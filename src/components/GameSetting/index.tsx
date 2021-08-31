@@ -1,14 +1,11 @@
-import React, { FunctionComponent, useState } from 'react';
+import { GameLevel } from '@/types/game';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import Button from '../Button';
 import './style.scss';
 
-interface GameLevel {
-	size: [number, number];
-	totalMines: number;
-}
-
 interface Props {
 	onChangeLevel: (level: GameLevel) => void;
+	onLevelConfirm: () => void;
 }
 
 const easyLevel: GameLevel = { totalMines: 10, size: [10, 10] };
@@ -21,6 +18,10 @@ const presetLevel: { [key: string]: GameLevel } = { easyLevel, midLevel, hardLev
 
 const GameSetting: FunctionComponent<Props> = props => {
 	const [level, setLevel] = useState<GameLevel>(easyLevel);
+
+	useEffect(() => {
+		props.onChangeLevel(level);
+	}, [level]);
 
 	const changePresetLevel = (level: 'easy' | 'mid' | 'hard') => {
 		setLevel(presetLevel[`${level}Level`]);
@@ -72,7 +73,7 @@ const GameSetting: FunctionComponent<Props> = props => {
 			<div className="game-setting__bottom">
 				<Button
 					onClick={() => {
-						props.onChangeLevel(level);
+						props.onLevelConfirm();
 					}}
 				>
 					确定

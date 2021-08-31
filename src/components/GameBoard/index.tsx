@@ -10,6 +10,7 @@ interface Props {
 		size: [number, number];
 	};
 	onGameEnd: (type: 'win' | 'fail') => void;
+	onBack: () => void;
 }
 
 type gameStatus = 'game-pause' | 'game-playing' | 'game-end';
@@ -195,7 +196,7 @@ const GameBoard: FunctionComponent<Props> = props => {
 					<Button onClick={() => init()}>重来</Button>
 				</div>
 				<div className="back">
-					<Button>返回</Button>
+					<Button onClick={props.onBack.bind(this)}>返回</Button>
 				</div>
 				<div className="mine-count">
 					<span>剩余:{props.level.totalMines - mineCount.marked}</span>
