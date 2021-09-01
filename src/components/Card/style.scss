@@ -1,0 +1,69 @@
+.l-card {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: #000000d9;
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    font-feature-settings: "tnum";
+    position: relative;
+    background: #fff;
+    border-radius: 2px;
+
+    &.l-card-bordered {
+        border: 1px solid #f0f0f0;
+    }
+
+    .l-card-head {
+        min-height: 48px;
+        margin-bottom: -1px;
+        padding: 0 24px;
+        color: #000000d9;
+        font-weight: 500;
+        font-size: 16px;
+        background: 0 0;
+        border-bottom: 1px solid #f0f0f0;
+        border-radius: 2px 2px 0 0;
+
+        &::after {
+            display: table;
+            clear: both;
+            content: "";
+        }
+
+        &::before {
+            display: table;
+            content: "";
+        }
+
+        .l-card-head-wrapper {
+            display: flex;
+            align-items: center;
+
+            .l-card-head-title {
+                display: inline-block;
+                flex: 1;
+                padding: 16px 0;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .l-card-head-extra {
+                float: right;
+                margin-left: auto;
+                padding: 16px 0;
+                color: #000000d9;
+                font-weight: 400;
+                font-size: 14px;
+
+            }
+        }
+    }
+
+    .l-card-body {
+        padding: 24px;
+    }
+}

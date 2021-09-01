@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, Game } from '@/components/';
 import { alert } from './components/Modal';
+import Card from './components/Card';
 
 function App() {
 	const [visible, setVisible] = useState(false);
@@ -22,6 +23,9 @@ function App() {
 			>
 				<span>切换</span>
 			</Button>
+			<Card title="title" style={{ width: 300 }}>
+				<p>content</p>
+			</Card>
 			<Modal
 				visible={visible}
 				title="标题"

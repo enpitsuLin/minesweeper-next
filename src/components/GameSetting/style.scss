@@ -2,10 +2,13 @@
 	padding: 32px;
 	border-radius: 8px;
 	box-shadow: 5px 5px 18px rgb(0 0 0 / 40%);
+
+
 	.game-setting__content {
-		> div {
+		>div {
 			margin-bottom: 16px;
 		}
+
 		.levels {
 			display: flex;
 			justify-content: space-between;
@@ -16,6 +19,7 @@
 		text-align: right;
 		margin-bottom: 0;
 	}
+
 	input {
 		width: 150px;
 		text-indent: 80px;
@@ -25,10 +29,12 @@
 		height: 28px;
 		text-align: center;
 		transition-duration: 0.4s;
+
 		&:focus {
 			box-shadow: 2px 2px 8px #111;
 			text-indent: 70px;
 		}
+
 		&:disabled {
 			background-color: #64646473;
 		}

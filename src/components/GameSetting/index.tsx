@@ -18,22 +18,28 @@ const presetLevel: { [key: string]: GameLevel } = { easyLevel, midLevel, hardLev
 
 const GameSetting: FunctionComponent<Props> = props => {
 	const [level, setLevel] = useState<GameLevel>(easyLevel);
+	const [curLevel, setCurLevel] = useState<'easy' | 'mid' | 'hard' | 'custom'>('easy');
 
 	useEffect(() => {
 		props.onChangeLevel(level);
 	}, [level]);
 
-	const changePresetLevel = (level: 'easy' | 'mid' | 'hard') => {
-		setLevel(presetLevel[`${level}Level`]);
+	const changePresetLevel = (level: 'easy' | 'mid' | 'hard' | 'custom') => {
+		setCurLevel(level);
+		if (level !== 'custom') {
+			setLevel(presetLevel[`${level}Level`]);
+		}
 	};
 	return (
 		<div className="game-setting">
 			<div className="game-setting__content">
 				<div className="levels">
-					<Button onClick={changePresetLevel.bind(this, 'easy')}>简单</Button>
-					<Button onClick={changePresetLevel.bind(this, 'mid')}>中级</Button>
-					<Button onClick={changePresetLevel.bind(this, 'hard')}>高级</Button>
-					<Button type="primary">自定义</Button>
+					<Button onClick={() => changePresetLevel('easy')}>简单</Button>
+					<Button onClick={() => changePresetLevel('mid')}>中级</Button>
+					<Button onClick={() => changePresetLevel('hard')}>高级</Button>
+					<Button onClick={() => changePresetLevel('custom')} type="primary">
+						自定义
+					</Button>
 				</div>
 				<div className="size">
 					<span>雷区尺寸：</span>
@@ -42,6 +48,7 @@ const GameSetting: FunctionComponent<Props> = props => {
 						value={level.size[0]}
 						min="8"
 						max="50"
+						disabled={curLevel !== 'custom'}
 						onChange={e => {
 							setLevel((val: GameLevel) => ({ ...val, size: [Number(e.target.value), level.size[1]] }));
 						}}
@@ -52,6 +59,7 @@ const GameSetting: FunctionComponent<Props> = props => {
 						value={level.size[1]}
 						min="8"
 						max="50"
+						disabled={curLevel !== 'custom'}
 						onChange={e => {
 							setLevel((val: GameLevel) => ({ ...val, size: [level.size[0], Number(e.target.value)] }));
 						}}
@@ -64,6 +72,7 @@ const GameSetting: FunctionComponent<Props> = props => {
 						value={level.totalMines}
 						min="1"
 						max="99"
+						disabled={curLevel !== 'custom'}
 						onChange={e => {
 							setLevel((val: GameLevel) => ({ size: level.size, totalMines: Number(e.target.value) }));
 						}}

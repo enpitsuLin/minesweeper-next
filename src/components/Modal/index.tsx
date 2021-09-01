@@ -3,7 +3,7 @@ import { createPortal, render, unmountComponentAtNode } from 'react-dom';
 import './style.scss';
 import Button from '../Button';
 
-interface Prop {
+interface Props {
 	title?: string;
 	visible: boolean;
 	/** 是否模态对话框 */
@@ -14,7 +14,7 @@ interface Prop {
 	onCancel: () => void;
 }
 
-const Modal: FunctionComponent<Prop> = props => {
+const Modal: FunctionComponent<Props> = props => {
 	const { title, closeOnModal, appendToBody, onCancel, onOk } = props;
 
 	const modal =
