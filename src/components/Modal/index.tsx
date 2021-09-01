@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { cloneElement, FunctionComponent, ReactFragment, ReactNode } from 'react';
+import { createPortal, render, unmountComponentAtNode } from 'react-dom';
 import './style.scss';
 import Button from '../Button';
 
@@ -7,24 +8,22 @@ interface Prop {
 	visible: boolean;
 	/** 是否模态对话框 */
 	closeOnModal?: boolean;
+	/** 是否插入body节点 */
+	appendToBody?: boolean;
 	onOk: () => void;
 	onCancel: () => void;
 }
 
-export default class Modal extends Component<Prop> {
-	constructor(props: Prop) {
-		super(props);
-	}
+const Modal: FunctionComponent<Prop> = props => {
+	const { title, closeOnModal, appendToBody, onCancel, onOk } = props;
 
-	render() {
-		const { title, closeOnModal, onCancel, onOk } = this.props;
-
-		return this.props.visible === true ? (
+	const modal =
+		props.visible === true ? (
 			<div>
 				<div
 					className="modal-mask"
 					onClick={() => {
-						if (closeOnModal || closeOnModal === undefined) onCancel();
+						if (closeOnModal) onCancel();
 					}}
 				/>
 				<div className="modal-wrap" role="dialog">
@@ -38,7 +37,7 @@ export default class Modal extends Component<Prop> {
 							<div className="modal-header">
 								<div className="modal-title">{title}</div>
 							</div>
-							<div className="modal-body">{this.props.children}</div>
+							<div className="modal-body">{props.children}</div>
 							<div className="modal-footer">
 								<Button onClick={onCancel.bind(this)}>
 									<span>取消</span>
@@ -52,5 +51,36 @@ export default class Modal extends Component<Prop> {
 				</div>
 			</div>
 		) : null;
-	}
-}
+	return appendToBody ? createPortal(modal, document.body) : modal;
+};
+
+const alert = (title: string, context: string | ReactNode | ReactFragment, option?: any) => {
+	const component = (
+		<Modal
+			title={title}
+			visible={true}
+			onOk={() => {
+				render(cloneElement(component, { visible: false }), div);
+				unmountComponentAtNode(div);
+				div.remove();
+			}}
+			onCancel={() => {
+				render(cloneElement(component, { visible: false }), div);
+				unmountComponentAtNode(div);
+				div.remove();
+			}}
+		>
+			{context}
+		</Modal>
+	);
+	const div = document.createElement('div');
+	document.body.append(div);
+	render(component, div);
+};
+
+Modal.defaultProps = {
+	closeOnModal: true
+};
+
+export default Modal;
+export { alert };
