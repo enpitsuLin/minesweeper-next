@@ -79,7 +79,8 @@ const alert = (title: string, context: string | ReactNode | ReactFragment, optio
 };
 
 Modal.defaultProps = {
-	closeOnModal: true
+	closeOnModal: true,
+	appendToBody: true
 };
 
 export default Modal;

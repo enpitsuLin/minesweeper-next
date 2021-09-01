@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import Cell from '../Cell';
 import Button from '../Button';
-import { useTimer } from '@/hooks/timer';
+import useTimer from '@/hooks/useTimer';
 import { CellItem } from '@/types/game';
 import './style.scss';
 
