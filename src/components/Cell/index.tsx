@@ -1,14 +1,6 @@
+import { CellItem } from '@/types/game';
 import React, { FunctionComponent } from 'react';
 import './style.scss';
-
-export interface CellItem {
-	row: number;
-	col: number;
-	isOpen: boolean;
-	isMark: boolean;
-	isMine: boolean;
-	adjMine: number;
-}
 
 interface Props extends CellItem {
 	handleEvent?: (type: 'mark' | 'open') => void;
