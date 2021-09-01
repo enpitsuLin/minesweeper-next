@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
  * @param callback
  * @returns
  */
-export function useTimer(timeout = 1000, callback?: () => void) {
+export default function useTimer(timeout = 1000, callback?: () => void) {
 	const [timer, setTimer] = useState<number | null>();
 	const [time, setTime] = useState(0);
 	/** 开始计时器 */
