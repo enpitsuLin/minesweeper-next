@@ -28,7 +28,7 @@
 - [x] 使用 `Babel` 进行语法转换;
 - [x] 目录结构按照 `Vue` 的习惯构建;
 - [x] 使用 `react hooks`~~简单的使用了一下~~已完全转用`hooks`;
-- [x] 使用 `styled-components`~~除 `reset css` 外已抛弃~~;
+- [x] 使用 `styled-components`~~已抛弃~~;
 - [ ] 添加 `ESlint`做代码风格约束;
 - [ ] 增加状态管理系统;
 - [ ] 增加路由处理系统;

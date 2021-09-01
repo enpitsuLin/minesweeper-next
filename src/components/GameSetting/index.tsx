@@ -33,7 +33,7 @@ const GameSetting: FunctionComponent<Props> = props => {
 					<Button onClick={changePresetLevel.bind(this, 'easy')}>简单</Button>
 					<Button onClick={changePresetLevel.bind(this, 'mid')}>中级</Button>
 					<Button onClick={changePresetLevel.bind(this, 'hard')}>高级</Button>
-					<Button>自定义</Button>
+					<Button type="primary">自定义</Button>
 				</div>
 				<div className="size">
 					<span>雷区尺寸：</span>

@@ -1,3 +1,5 @@
+@import '@/style/themes/default.scss';
+
 .l-button {
 	line-height: 1.5715;
 	position: relative;
@@ -19,12 +21,26 @@
 	color: #000000d9;
 	border-color: #d9d9d9;
 	background: #fff;
+
 	&:hover {
 		border-color: #b2b2b2;
 	}
-	& + .l-button {
+
+	&+.l-button {
 		margin-left: 8px;
 	}
+
+	&.primary {
+		background-color: $primary;
+		color: $color-text-base-inverse;
+		border-color: $primary;
+
+		&:hover,
+		&:active {
+			background-color: $primary-tap;
+		}
+	}
+
 	&[click-animating='true']::after {
 		position: absolute;
 		top: 0;
@@ -42,6 +58,7 @@
 		pointer-events: none;
 	}
 }
+
 @keyframes fadeEffect {
 	100% {
 		opacity: 0;
